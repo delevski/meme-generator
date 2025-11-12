@@ -90,6 +90,14 @@
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
+.meme-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.post-btn,
 .download-btn {
   padding: 18px 50px;
   font-size: 22px;
@@ -128,6 +136,52 @@
 
 .download-btn:active {
   transform: translateY(-2px) scale(1.02);
+}
+
+.post-btn {
+  padding: 18px 50px;
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.post-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.post-btn:hover::before {
+  left: 100%;
+}
+
+.post-btn:hover:not(:disabled) {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 45px rgba(255, 107, 107, 0.6);
+}
+
+.post-btn:active {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.post-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }
 
 @media (max-width: 768px) {

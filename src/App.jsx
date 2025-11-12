@@ -1,10 +1,15 @@
 import { useState } from 'react';
+import db from './lib/instant';
+import Auth from './components/Auth';
 import ImageSelector from './components/ImageSelector';
 import MemeEditor from './components/MemeEditor';
 import ControlsPanel from './components/ControlsPanel';
+import MemeFeed from './components/MemeFeed';
 import './App.css';
 
 function App() {
+  const { user } = db.useAuth();
+  const [currentView, setCurrentView] = useState('feed'); // 'feed' or 'create'
   const [selectedImage, setSelectedImage] = useState(null);
   const [labels, setLabels] = useState([]);
   const [activeLabel, setActiveLabel] = useState(null);
@@ -16,15 +21,49 @@ function App() {
     setActiveLabel(null);
   };
 
+  const switchToCreate = () => {
+    setCurrentView('create');
+    setSelectedImage(null);
+  };
+
   return (
     <div className="app">
       <header className="app-header">
-        <h1>🔥 Meme Generator</h1>
-        <p>Create epic memes in seconds!</p>
+        <div className="header-content">
+          <div className="header-left">
+            <h1>🎭 Meme Generator</h1>
+            <p>Create and share epic memes!</p>
+          </div>
+          <div className="header-right">
+            <Auth />
+          </div>
+        </div>
+        
+        <nav className="app-nav">
+          <button 
+            className={`nav-btn ${currentView === 'feed' ? 'active' : ''}`}
+            onClick={() => setCurrentView('feed')}
+          >
+            📱 Feed
+          </button>
+          <button 
+            className={`nav-btn ${currentView === 'create' ? 'active' : ''}`}
+            onClick={switchToCreate}
+          >
+            ✨ Create Meme
+          </button>
+        </nav>
       </header>
 
       <main className="app-main">
-        {!selectedImage ? (
+        {!user && currentView === 'create' ? (
+          <div className="auth-required">
+            <h2>🔒 Sign in to create memes</h2>
+            <p>Please sign in above to start creating and posting memes</p>
+          </div>
+        ) : currentView === 'feed' ? (
+          <MemeFeed />
+        ) : !selectedImage ? (
           <ImageSelector 
             onImageSelect={handleImageSelect}
             selectedImage={selectedImage}
@@ -60,7 +99,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>Made with 🔥 for meme lovers everywhere</p>
+        <p>Made with ❤️ for meme lovers everywhere</p>
       </footer>
     </div>
   );
