@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import db from '../lib/instant';
+import { tx } from '@instantdb/react';
 import './MemeCard.css';
 
 const MemeCard = ({ meme, userVote, onVote }) => {
@@ -23,7 +24,7 @@ const MemeCard = ({ meme, userVote, onVote }) => {
     setIsDeleting(true);
     try {
       await db.transact([
-        db.tx.memes[meme.id].delete(),
+        tx.memes[meme.id].delete(),
       ]);
     } catch (error) {
       console.error('Error deleting meme:', error);

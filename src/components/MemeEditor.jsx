@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import DraggableLabel from './DraggableLabel';
 import html2canvas from 'html2canvas';
 import db from '../lib/instant';
+import { id, tx } from '@instantdb/react';
 import './MemeEditor.css';
 
 const MemeEditor = ({ imageUrl, labels, setLabels, activeLabel, setActiveLabel }) => {
@@ -90,7 +91,7 @@ const MemeEditor = ({ imageUrl, labels, setLabels, activeLabel, setActiveLabel }
 
       // Post to InstantDB
       await db.transact([
-        db.tx.memes[db.id()].update({
+        tx.memes[id()].update({
           imageUrl: dataUrl,
           userId: user.id,
           userEmail: user.email,

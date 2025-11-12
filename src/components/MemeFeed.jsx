@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import db from '../lib/instant';
+import { id, tx } from '@instantdb/react';
 import MemeCard from './MemeCard';
 import './MemeFeed.css';
 
@@ -60,18 +61,18 @@ const MemeFeed = () => {
       if (value === 0) {
         // Remove vote
         await db.transact([
-          db.tx.votes[existingVote.id].delete(),
+          tx.votes[existingVote.id].delete(),
         ]);
       } else {
         // Update vote
         await db.transact([
-          db.tx.votes[existingVote.id].update({ value }),
+          tx.votes[existingVote.id].update({ value }),
         ]);
       }
     } else if (value !== 0) {
       // Create new vote
       await db.transact([
-        db.tx.votes[db.id()].update({
+        tx.votes[id()].update({
           memeId,
           userId: user.id,
           value,
