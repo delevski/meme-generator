@@ -1,7 +1,7 @@
 import { init } from '@instantdb/react';
 
-// Initialize InstantDB with the provided app-id
-const APP_ID = '11846490-15a5-46f8-911b-36f8e952a64d';
+// Initialize InstantDB with the provided app-id from environment variables
+const APP_ID = import.meta.env.VITE_APP_ID;
 
 // Define the schema structure
 const schema = {
