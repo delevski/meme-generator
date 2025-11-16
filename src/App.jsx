@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import db from './lib/instant';
 import Auth from './components/Auth';
-import ImageSelector from './components/ImageSelector';
+import TemplateSidebar from './components/TemplateSidebar';
 import MemeEditor from './components/MemeEditor';
 import ControlsPanel from './components/ControlsPanel';
 import MemeFeed from './components/MemeFeed';
@@ -13,12 +13,32 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [labels, setLabels] = useState([]);
   const [activeLabel, setActiveLabel] = useState(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    // Start collapsed on mobile, expanded on desktop
+    return window.innerWidth <= 768;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      // On desktop, ensure sidebar is visible; on mobile, keep current state
+      if (window.innerWidth > 768 && sidebarCollapsed) {
+        setSidebarCollapsed(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [sidebarCollapsed]);
 
   const handleImageSelect = (imageUrl) => {
     setSelectedImage(imageUrl);
     // Reset labels when a new image is selected
     setLabels([]);
     setActiveLabel(null);
+    // Auto-collapse sidebar on mobile after selection
+    if (window.innerWidth <= 768) {
+      setSidebarCollapsed(true);
+    }
   };
 
   const switchToCreate = () => {
@@ -63,36 +83,63 @@ function App() {
           </div>
         ) : currentView === 'feed' ? (
           <MemeFeed />
-        ) : !selectedImage ? (
-          <ImageSelector 
-            onImageSelect={handleImageSelect}
-            selectedImage={selectedImage}
-          />
         ) : (
-          <div className="editor-layout">
-            <div className="editor-left">
-              <button 
-                className="change-image-btn"
-                onClick={() => setSelectedImage(null)}
-              >
-                ← Change Image
-              </button>
-              <MemeEditor 
-                imageUrl={selectedImage}
-                labels={labels}
-                setLabels={setLabels}
-                activeLabel={activeLabel}
-                setActiveLabel={setActiveLabel}
+          <div className="create-layout">
+            {!sidebarCollapsed && (
+              <div 
+                className="sidebar-overlay"
+                onClick={() => setSidebarCollapsed(true)}
               />
-            </div>
+            )}
+            <TemplateSidebar 
+              onImageSelect={handleImageSelect}
+              selectedImage={selectedImage}
+              isCollapsed={sidebarCollapsed}
+              onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+            />
             
-            <div className="editor-right">
-              <ControlsPanel 
-                labels={labels}
-                setLabels={setLabels}
-                activeLabel={activeLabel}
-                setActiveLabel={setActiveLabel}
-              />
+            <div className="main-content-area">
+              {!selectedImage ? (
+                <div className="no-image-selected">
+                  <div className="no-image-content">
+                    <h2>Select a Template</h2>
+                    <p>Choose a template from the sidebar or upload your own image to get started</p>
+                    <button 
+                      className="open-sidebar-btn"
+                      onClick={() => setSidebarCollapsed(false)}
+                    >
+                      Browse Templates
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="editor-layout">
+                  <div className="editor-left">
+                    <button 
+                      className="change-image-btn"
+                      onClick={() => setSelectedImage(null)}
+                    >
+                      ← Change Image
+                    </button>
+                    <MemeEditor 
+                      imageUrl={selectedImage}
+                      labels={labels}
+                      setLabels={setLabels}
+                      activeLabel={activeLabel}
+                      setActiveLabel={setActiveLabel}
+                    />
+                  </div>
+                  
+                  <div className="editor-right">
+                    <ControlsPanel 
+                      labels={labels}
+                      setLabels={setLabels}
+                      activeLabel={activeLabel}
+                      setActiveLabel={setActiveLabel}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -55,14 +55,19 @@ const ImageSelector = ({ onImageSelect, selectedImage }) => {
 
   return (
     <div className="image-selector">
-      <h2>Choose Your Meme</h2>
+      <div className="sidebar-header">
+        <h2>Templates</h2>
+        <p className="sidebar-subtitle">Choose a meme template</p>
+      </div>
       
       <div className="upload-section">
         <button 
           className="upload-btn"
           onClick={() => fileInputRef.current.click()}
+          title="Upload your own image"
         >
-          📤 Upload Your Image
+          <span className="upload-icon">📤</span>
+          <span className="upload-text">Upload Image</span>
         </button>
         <input
           ref={fileInputRef}
@@ -73,24 +78,22 @@ const ImageSelector = ({ onImageSelect, selectedImage }) => {
         />
       </div>
 
-      <div className="divider">
-        <span>OR</span>
-      </div>
-
-      <div className="templates-section">
-        <h3>Popular Templates</h3>
-        <div className="templates-grid">
-          {memeTemplates.map((template) => (
-            <div
-              key={template.id}
-              className={`template-card ${selectedImage === template.url ? 'selected' : ''}`}
-              onClick={() => handleTemplateSelect(template.url)}
-            >
+      <div className="templates-list">
+        {memeTemplates.map((template) => (
+          <div
+            key={template.id}
+            className={`template-item ${selectedImage === template.url ? 'selected' : ''}`}
+            onClick={() => handleTemplateSelect(template.url)}
+            title={template.name}
+          >
+            <div className="template-image-wrapper">
               <img src={template.url} alt={template.name} />
-              <p>{template.name}</p>
             </div>
-          ))}
-        </div>
+            <div className="template-info">
+              <span className="template-name">{template.name}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -59,6 +59,11 @@ const ControlsPanel = ({ labels, setLabels, activeLabel, setActiveLabel }) => {
 
   return (
     <div className="controls-panel">
+      <div className="sidebar-header">
+        <h2>Controls</h2>
+        <p className="sidebar-subtitle">Customize your meme</p>
+      </div>
+
       <div className="control-section">
         <button className="add-label-btn" onClick={addNewLabel}>
           ➕ Add Label

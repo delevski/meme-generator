@@ -113,7 +113,7 @@ const MemeEditor = ({ imageUrl, labels, setLabels, activeLabel, setActiveLabel }
   if (!imageUrl) {
     return (
       <div className="meme-editor-placeholder">
-        <p>👆 Select or upload an image to start creating your meme!</p>
+        <p>👈 Select a template or upload your own image to start creating your meme!</p>
       </div>
     );
   }
