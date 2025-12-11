@@ -1,10 +1,14 @@
 .controls-panel {
-  background: transparent;
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
   padding: 0;
-  height: 100%;
+  height: fit-content;
   animation: slideInRight 0.4s ease-out;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes slideInRight {
@@ -19,22 +23,24 @@
 }
 
 .sidebar-header {
-  padding: 24px 20px 16px;
-  border-bottom: 2px solid rgba(255, 204, 0, 0.15);
-  background: linear-gradient(135deg, rgba(255, 204, 0, 0.05) 0%, transparent 100%);
+  padding: 24px 20px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
 }
 
 .sidebar-header h2 {
-  color: #ffcc00;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0 0 8px 0;
   font-size: 22px;
   font-weight: 800;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
 }
 
 .sidebar-subtitle {
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-secondary);
   margin: 0;
   font-size: 13px;
   font-weight: 500;
@@ -43,36 +49,36 @@
 .control-section {
   margin-bottom: 0;
   padding: 24px 20px;
-  border-bottom: 2px solid rgba(255, 204, 0, 0.15);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .control-section:last-child {
   margin-bottom: 0;
   border-bottom: none;
-  padding-bottom: 0;
 }
 
 .control-section h3 {
-  color: #ffcc00;
-  font-size: 20px;
+  color: var(--text-primary);
+  font-size: 16px;
   margin-bottom: 16px;
   font-weight: 700;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 
 .add-label-btn {
   width: 100%;
-  padding: 18px;
-  font-size: 22px;
-  font-weight: 800;
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-  color: #1a1a1a;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  background: var(--primary-gradient);
+  color: white;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
   position: relative;
   overflow: hidden;
   letter-spacing: 0.5px;
@@ -86,7 +92,7 @@
   width: 0;
   height: 0;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   transform: translate(-50%, -50%);
   transition: width 0.6s, height 0.6s;
 }
@@ -98,7 +104,7 @@
 
 .add-label-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(255, 107, 53, 0.6);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.6);
 }
 
 .add-label-btn:active {
@@ -117,7 +123,7 @@
   aspect-ratio: 1;
   border-radius: 10px;
   cursor: pointer;
-  border: 2px solid rgba(255, 204, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -128,7 +134,7 @@
   position: absolute;
   inset: -3px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(255, 107, 53, 0.3), rgba(255, 204, 0, 0.3));
+  background: var(--primary-gradient);
   opacity: 0;
   transition: opacity 0.3s;
   z-index: -1;
@@ -140,36 +146,36 @@
 
 .color-swatch:hover {
   transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
-  border-color: #ffcc00;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  border-color: var(--accent-blue);
 }
 
 .color-swatch.selected {
-  border-color: #00ff88;
+  border-color: var(--accent-cyan);
   transform: scale(1.2);
-  box-shadow: 0 0 0 4px rgba(0, 255, 136, 0.4);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.4);
 }
 
 .custom-color-input {
   width: 100%;
   height: 48px;
-  border: 2px solid rgba(255, 204, 0, 0.3);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: rgba(45, 45, 45, 0.5);
+  background: rgba(15, 23, 42, 0.6);
 }
 
 .custom-color-input:hover {
-  border-color: #ffcc00;
-  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.3);
+  border-color: var(--accent-blue);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .font-size-slider {
   width: 100%;
-  height: 10px;
+  height: 8px;
   border-radius: 8px;
-  background: linear-gradient(to right, #ff6b35, #f7931e, #ffcc00);
+  background: linear-gradient(to right, var(--accent-blue), var(--accent-purple), var(--accent-cyan));
   outline: none;
   cursor: pointer;
   -webkit-appearance: none;
@@ -179,51 +185,50 @@
 .font-size-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00ff88, #00cc70);
-  border: 4px solid #1a1a1a;
-  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
+  background: white;
+  border: 3px solid var(--accent-blue);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .font-size-slider::-webkit-slider-thumb:hover {
   transform: scale(1.3);
-  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.6);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
 .font-size-slider::-moz-range-thumb {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00ff88, #00cc70);
-  border: 4px solid #1a1a1a;
-  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.4);
+  background: white;
+  border: 3px solid var(--accent-blue);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .font-size-slider::-moz-range-thumb:hover {
   transform: scale(1.3);
-  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.6);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
 
 .no-selection-message {
   text-align: center;
   padding: 40px 20px;
   margin: 20px;
-  color: rgba(255, 204, 0, 0.6);
+  color: var(--text-secondary);
   font-style: italic;
-  background: rgba(255, 204, 0, 0.05);
+  background: rgba(102, 126, 234, 0.05);
   border-radius: 12px;
-  border: 2px dashed rgba(255, 204, 0, 0.2);
+  border: 2px dashed var(--border-color);
 }
 
 .no-selection-message p {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 500;
   letter-spacing: 0.3px;
 }
-

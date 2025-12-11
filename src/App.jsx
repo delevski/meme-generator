@@ -51,8 +51,8 @@ function App() {
       <header className="app-header">
         <div className="header-content">
           <div className="header-left">
-            <h1>🎭 Meme Generator</h1>
-            <p>Create and share epic memes!</p>
+            <h1>MemeCraft Pro</h1>
+            <p>Professional Meme Creation Platform</p>
           </div>
           <div className="header-right">
             <Auth />
@@ -64,13 +64,13 @@ function App() {
             className={`nav-btn ${currentView === 'feed' ? 'active' : ''}`}
             onClick={() => setCurrentView('feed')}
           >
-            📱 Feed
+            Community Feed
           </button>
           <button 
             className={`nav-btn ${currentView === 'create' ? 'active' : ''}`}
             onClick={switchToCreate}
           >
-            ✨ Create Meme
+            Create New
           </button>
         </nav>
       </header>
@@ -146,7 +146,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>Made with ❤️ for meme lovers everywhere</p>
+        <p>MemeCraft Pro - Empowering Creative Expression Through Technology</p>
       </footer>
     </div>
   );

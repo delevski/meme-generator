@@ -2,11 +2,12 @@ import { useState } from 'react';
 import db from '../lib/instant';
 import { id, tx } from '@instantdb/react';
 import MemeCard from './MemeCard';
+import { mockMemes, mockVotes } from '../lib/mockData';
 import './MemeFeed.css';
 
 const MemeFeed = () => {
   const { user } = db.useAuth();
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState('popular');
 
   // Query memes and votes
   const { isLoading, error, data } = db.useQuery({
@@ -14,7 +15,15 @@ const MemeFeed = () => {
     votes: {},
   });
 
-  if (isLoading) {
+  // Use mock data if no real data exists, or combine both
+  const realMemes = data?.memes || [];
+  const realVotes = data?.votes || [];
+  
+  // Combine real and mock data (mock data shows even if there's real data for demo purposes)
+  const memes = [...mockMemes, ...realMemes];
+  const votes = [...mockVotes, ...realVotes];
+
+  if (isLoading && memes.length === 0) {
     return (
       <div className="feed-loading">
         <div className="spinner"></div>
@@ -23,16 +32,13 @@ const MemeFeed = () => {
     );
   }
 
-  if (error) {
+  if (error && memes.length === 0) {
     return (
       <div className="feed-error">
         <p>Error loading memes: {error.message}</p>
       </div>
     );
   }
-
-  const memes = data?.memes || [];
-  const votes = data?.votes || [];
 
   // Calculate vote counts for each meme
   const memesWithVotes = memes.map(meme => {
@@ -90,19 +96,35 @@ const MemeFeed = () => {
   return (
     <div className="meme-feed">
       <div className="feed-header">
-        <h2>🎭 Meme Feed</h2>
+        <div className="feed-header-content">
+          <div>
+            <h2>Community Memes</h2>
+            <p className="feed-subtitle">Discover and share the best memes</p>
+          </div>
+          <div className="feed-stats">
+            <div className="stat-item">
+              <span className="stat-number">{sortedMemes.length}</span>
+              <span className="stat-label">Total Memes</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <span className="stat-number">{votes.length}</span>
+              <span className="stat-label">Total Votes</span>
+            </div>
+          </div>
+        </div>
         <div className="feed-controls">
-          <label>Sort by:</label>
+          <label>Sort by</label>
           <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-            <option value="newest">Newest</option>
             <option value="popular">Most Popular</option>
+            <option value="newest">Newest First</option>
           </select>
         </div>
       </div>
 
       {sortedMemes.length === 0 ? (
         <div className="empty-feed">
-          <p>No memes yet! Be the first to post one! 🚀</p>
+          <p>No memes yet! Be the first to post one!</p>
         </div>
       ) : (
         <div className="memes-grid">
